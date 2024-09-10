@@ -9,18 +9,15 @@ export class UsersService {
 
     constructor(@InjectModel('usersInfo') private userModel: Model<UsersInfo>){}
 
-    createUser(newUser: any){
-        const user = new this.userModel(newUser);
-        return user.save();
+    async createUser(newUser: any){
+        return await new this.userModel(newUser).save();
     }
 
     async getAllUsers(){
-        const result = await this.userModel.find().exec();
-        return result;
+        return await this.userModel.find().exec();
     }
 
-    getUserByName(username: string){
-        return this.userModel.find({ name: {$gte: username} }).exec();
-
+    async getUserByName(username: string){
+        return await this.userModel.find({ name: {$gte: username} }).exec();
     }
 }
